@@ -4,7 +4,7 @@ import altair as alt
 
 #step 9: Update the page configuration
 st.set_page_config(
-    page_title="EduRisk Analytics - Lab 03",
+    page_title="EduRisk Analytics - Lab 04",
     page_icon="🎓",
     layout="wide"
 )
@@ -41,6 +41,9 @@ student_df["Risk Level"] = student_df.apply(
     ),
     axis=1
 )
+#step 12: Initialize the Streamlit app
+if "risk_history" not in st.session_state:
+    st.session_state["risk_history"] = []
 
 #step 15: update sidebar navigation
 with st.sidebar:
@@ -50,16 +53,16 @@ with st.sidebar:
         ["Home", "Dashboard", "Student Data", "Risk Checker", "About"]
     )
     
-#step 16: Update the home page content
+#step 14: Update the home page content
 if selected_page == "Home":
     st.title("🎓 EduRisk Analytics")
-    st.subheader("Frontend Prototype with CSV Data Loading")
-    st.write("Welcome to Lab 03.")
+    st.subheader("Reliable Risk Checker with Forms and Session State")
+    st.write("Welcome to Lab 04.")
     st.write(
-        "In this lab, the app loads student data from students.csv "
-        "using Pandas instead of storing data directly inside app.py."
+        "In this lab, the app improves the Risk Checker page using "
+        "Streamlit forms, input validation, and session state."
     )
-    st.success("Lab 03 app is running successfully!")
+    st.success("Lab 04 app is running successfully!")
 
 
 # Step 17: Update the Dashboard Page
@@ -139,7 +142,7 @@ elif selected_page == "Student Data":
     st.subheader("Full Student Dataset")
     st.dataframe(student_df)
     
-#step 19: Keep the the risk checker page
+# Step 17: Replace the Old Risk Checker Page
 elif selected_page == "Risk Checker":
     st.title("Single Student Risk Checker")
 
@@ -148,7 +151,20 @@ elif selected_page == "Risk Checker":
         input_score = st.number_input("Score", 0, 100, 50)
         input_attendance = st.number_input("Attendance", 0, 100, 50)
         submitted = st.form_submit_button("Check Risk")
-
+    if submitted:
+        if input_name.strip() == "":
+            st.warning("Please enter the student name.")
+        else:
+            risk_result = get_risk_level(
+                input_score,
+                input_attendance
+            )
+            result = {
+                "Student Name": input_name.strip(),
+                "Score": input_score,
+                "Attendance": input_attendance,
+                "Risk Level": risk_result
+            }
     if submitted:
         risk_result = get_risk_level(input_score, input_attendance)
 
@@ -162,19 +178,70 @@ elif selected_page == "Risk Checker":
             st.warning("Risk Level: Medium Risk")
         else:
             st.error("Risk Level: High Risk")
-            
-#step 20: Update the about page
+    
+
+    st.title("Single Student Risk Checker")
+
+    st.write(
+        "Enter student information to check risk level. "
+        "The result is based on score and attendance.")
+
+    st.info(
+        "This tool is for academic support. Risk results should help students, "
+        "not label or punish them.")
+    #step 24: save the risk result to session state
+    if submitted:
+        st.session_state["risk_history"].append(result)
+    
+    #Step 25: Show supportive risk feedback
+        if risk_result == "Low Risk":
+                st.success("Risk Level: Low Risk")
+                st.write("Student appears on track.")
+        elif risk_result == "Medium Risk":
+                st.warning("Risk Level: Medium Risk")
+                st.write("Monitor progress and provide guidance.")
+    else:
+                st.error("Risk Level: High Risk")
+                st.write("Student may need additional support.")
+    # Step 26: Display the Submitted Input
+    st.write("Student Name:", input_name.strip())
+    st.write("Score:", input_score)
+    st.write("Attendance:", input_attendance)
+    
+    # Step 27: Add Recent Risk Checks Section
+    st.subheader("Recent Risk Checks")
+    
+    # Step 28: Display Risk History Table
+    if len(st.session_state["risk_history"]) > 0:
+        history_df = pd.DataFrame(
+            st.session_state["risk_history"]
+        )
+        # Step 29: Add Clear History Button
+        if st.button("Clear History"):
+            st.session_state["risk_history"] = []
+            st.success("Risk check history cleared.")
+
+        st.dataframe(history_df)
+    else:
+        st.info("No risk checks yet.")
+        
+    st.warning(
+        "Ethics Reminder: Risk results should be used as guidance for support, "
+        "not as final judgment about a student."
+    )
+    
+# Step 31: Update the About Page
 else:
     st.title("About")
 
-    st.write("This app is part of Lab 03.")
+    st.write("This app is part of Lab 04.")
     st.write("Course: Web App Development for Data Science")
     st.write("Project Theme: EduRisk Analytics")
-    st.write("Topic: Data Loading, Layout, and Frontend Prototype")
+    st.write("Topic: Forms, Validation, and Session State")
 
     st.info(
-        "This frontend prototype loads real data from students.csv "
-        "and displays it using Streamlit and Pandas."
+        "This version improves the Risk Checker page using Streamlit forms, "
+        "input validation, and session state."
     )
 
     st.warning(
