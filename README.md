@@ -1,16 +1,13 @@
-<<<<<<< HEAD
 # Step 18: Write `README.md`
 
 ## What you will do
 
 Write project information in `README.md`.
-=======
 # Step 45: Update `README.md`
 
 ## What you will do
 
 Update your README file for Lab 04.
->>>>>>> e4691e639e17e6bef664997a72e7db06230a01d7
 
 ## File
 
@@ -20,12 +17,9 @@ README.md
 
 ## Content
 
-<<<<<<< HEAD
 ```markdown
 # Lab 01: First Streamlit App
-=======
 # Lab 04: Forms, Validation, and Session State
->>>>>>> e4691e639e17e6bef664997a72e7db06230a01d7
 
 ## Project Theme
 
@@ -33,7 +27,6 @@ EduRisk Analytics
 
 ## Description
 
-<<<<<<< HEAD
 This is my first Streamlit web app.
 
 ## Features
@@ -44,7 +37,6 @@ This is my first Streamlit web app.
 
 ## Tools Used
 
-=======
 This Streamlit app is a student academic monitoring prototype.
 
 This lab continues from Lab 03 and improves the Risk Checker page using Streamlit forms, input validation, and session state.
@@ -74,12 +66,10 @@ The app loads student data from students.csv, displays dashboard information, an
 ```
 ## Tools Used
 ```text
->>>>>>> e4691e639e17e6bef664997a72e7db06230a01d7
 - Python
 - Streamlit
 - Pandas
 - VS Code
-<<<<<<< HEAD
 
 ## How to Run
 
@@ -91,7 +81,6 @@ Name: Seng Ranut
 Student ID:21
 Class:M2
 ```
-=======
 ```
 ## Required Files
 ```text
@@ -110,4 +99,3 @@ streamlit run app.py
 Name: Seng Ranut
 Student ID:
 Class: M2
->>>>>>> e4691e639e17e6bef664997a72e7db06230a01d7
